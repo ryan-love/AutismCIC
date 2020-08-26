@@ -42,8 +42,8 @@ router.post("/", (req,res)=>{
          return value
        })
 
-       const image = [docx.Media.addImage(doc, fs.readFileSync("C:\\Users\\Ryan Love\\WebstormProjects\\AutismCIC\\photo.jpg"), 100, 100),
-      docx.Media.addImage(doc, fs.readFileSync("C:\\Users\\Ryan Love\\WebstormProjects\\AutismCIC\\ocr.png"), 100, 100)]
+       const image = docx.Media.addImage(doc, fs.readFileSync("/home/ryanlove/WebstormProjects/AutismCIC/photo.jpg"), 100, 100);
+
 
       var row = []
        for (let i = 0; i < act.length ; i++) {
@@ -63,7 +63,7 @@ router.post("/", (req,res)=>{
                }),
                new docx.TableCell({
                  children: [new docx.Paragraph({
-                   children: [image[i], new docx.TextRun({
+                   children: [image, new docx.TextRun({
                      text: act[i].split(",")[j],
                      bold: true,
                      font: "Tahoma",
@@ -111,7 +111,7 @@ router.post("/", (req,res)=>{
    if (text.split("\n").includes("Day 2")) {
 
          var l = text.match(/Day 2/g)
-         const image = docx.Media.addImage(doc, fs.readFileSync("C:\\Users\\Ryan Love\\WebstormProjects\\AutismCIC\\ocr.png"), 100, 100);
+         const image = docx.Media.addImage(doc, fs.readFileSync("/home/ryanlove/WebstormProjects/AutismCIC/ocr.png"), 100, 100);
 
 
          const table = new docx.Table({
@@ -196,7 +196,7 @@ router.post("/", (req,res)=>{
    if (text.split("\n").includes("Day 3")) {
 
      var l = text.match(/Day 2/g)
-     const image = docx.Media.addImage(doc, fs.readFileSync("C:\\Users\\Ryan Love\\WebstormProjects\\AutismCIC\\ocr.png"), 100, 100);
+     const image = docx.Media.addImage(doc, fs.readFileSync("/home/ryanlove/WebstormProjects/AutismCIC/ocr.png"), 100, 100);
 
 
      const table = new docx.Table({
@@ -284,7 +284,7 @@ router.post("/", (req,res)=>{
    if (text.split("\n").includes("Day 4")) {
 
      var l = text.match(/Day 2/g)
-     const image = docx.Media.addImage(doc, fs.readFileSync("C:\\Users\\Ryan Love\\WebstormProjects\\AutismCIC\\ocr.png"), 100, 100);
+     const image = docx.Media.addImage(doc, fs.readFileSync("/home/ryanlove/WebstormProjects/AutismCIC/ocr.png"), 100, 100);
 
 
      const table = new docx.Table({
@@ -372,7 +372,7 @@ router.post("/", (req,res)=>{
    if (text.split("\n").includes("Day 5")) {
 
      var l = text.match(/Day 2/g)
-     const image = docx.Media.addImage(doc, fs.readFileSync("C:\\Users\\Ryan Love\\WebstormProjects\\AutismCIC\\ocr.png"), 100, 100);
+     const image = docx.Media.addImage(doc, fs.readFileSync("/home/ryanlove/WebstormProjects/AutismCIC/ocr.png"), 100, 100);
 
 
      const table = new docx.Table({
@@ -459,7 +459,7 @@ router.post("/", (req,res)=>{
    }
 
    docx.Packer.toBuffer(doc).then((buffer) => {
-     fs.writeFileSync(`My Document${Math.random()}.doc`, buffer);
+     fs.writeFileSync(`My Document${Math.random()}.docx`, buffer);
      res.json("DONE")
    });
 
