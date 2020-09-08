@@ -162,7 +162,7 @@ router.post("/", (req,res)=>{
                new docx.TableCell({
                  children: [new docx.Paragraph({
                    children: [act[i].split(",")[j].match("Andrew arrives") ? image : act[i].split(",")[j].match("Handover of document and products") ?  image2 : false  , new docx.TextRun({
-                     text: act[i].split(",")[j] === "" ? act[i].split(",")[j].split(" "):act[i].split(",")[j] ,
+                     text: act[i].split(",")[j],
                      bold: true,
                      font: "Tahoma",
                    })]
