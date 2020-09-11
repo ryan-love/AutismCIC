@@ -5,6 +5,41 @@ var fs = require("fs")
 var crypto = require("crypto")
 var OCR = require("tesseract.js")
 
+var acts = ["Psychotherapy session","Working with an Assistance Dog – learn how to ‘Command’","Handover of documents and products",
+"Review of house and garden","Lunch and playtime with dog","Break","Exercise and walking your dog","Exercise and walking your dog",
+"Review of previous night","Exercise [dog’s name] (recall)","Your dog’s welfare and happiness","Communication in dogs and how to manage",
+"How to care for your dog","Client bonding with their dog","Public access training","Grooming demonstration","Exercise [dog’s name] (lead walk)",
+"Demonstration of [dog’s name]’s advanced tasks","Final questions and discuss Aftercare plan","End of day","Introduction to family pet dog",
+"Lunch","Exercise in park/recall/lead walk","Exercise and groom ready for public access"]
+var places = ["Your house","Pub","Your local area","Pet shop","Your local park","Newsagent","Pharmacy","Supermarket","Over video call",
+  "Front room","The lane","Entrance to the farm","Shops in Congleton","Bedroom","Bathroom","Your house and garden","Book shop","Vets","Train journey","Tram journey",
+  "Your school","Restaurant","Garden centre","Hairdressers","Bank","Café","City",]
+
+var options = ["    " +
+"    • Psychotherapy session – Front room if at the farm, over video call if not\n" +
+"    • Working with an Assistance Dog – learn how to ‘Command’ – Front room if at farm, Your house if not\n" +
+"    • Handover of documents and products – Your house and garden\n" +
+"    • Review of house and garden – Your house and garden\n" +
+"    • Lunch and playtime with dog – Front room if at the farm, Your house if not\n" +
+"    • Break – Front room if at the farm, Your house if not\n" +
+"    • Exercise and walking your dog – The lane if at the farm, Your local area and Your local park if not\n" +
+"    • [name/s] arrives/leaves – Entrance to the farm if at the farm, Your house if not\n" +
+"    • Review of previous night – Front room if at the farm, Your house if not\n" +
+"    • Exercise [dog’s name] (recall) – Your local park\n" +
+"    • Your dog’s welfare and happiness – Front room if at the farm, Your house if not\n" +
+"    • Communication in dogs and how to manage – Front room if at the farm, Your house if not\n" +
+"    • How to care for your dog - Front room if at the farm, Your house if not\n" +
+"    • Client bonding with their dog – Front room if at the farm, over video call if not\n" +
+"    • Public access training – Shops in Congleton for Family Training at the farm, if not see public access places listed on the schedule\n" +
+"    • Grooming demonstration – Front room, Bedroom, and Bathroom if at the farm, Your house if not\n" +
+"    • Exercise [dog’s name] (lead walk) – Your local area\n" +
+"    • Demonstration of [dog’s name]’s advanced tasks – Your house\n" +
+"    • Final questions and discuss Aftercare Plan - Front room if at the farm, Your house if not\n" +
+"    • End of day – Entrance to the farm if at the farm\n" +
+"    • Introduction to family pet dog – Your house and garden\n" +
+"    • Exercise in park/recall/lead walk – Your local park and Your local area\n" +
+"    • Exercise and groom ready for public access – Your house and garden"]
+
 router.post("/", (req,res)=>{
  OCR.recognize(
       `${req.body.files}`,
@@ -461,10 +496,12 @@ router.post("/", (req,res)=>{
 
    docx.Packer.toBuffer(doc).then((buffer) => {
      fs.writeFileSync(`My Document${Math.random()}.docx`, buffer);
-     res.json("DONE")
+
    });
 
-})
+}).then((result)=>{
+   res.json({payload:result,message:200,text:"Working"})
+ })
 })
 /* GET users listing. */
 router.get('/', function(req, res, next) {
