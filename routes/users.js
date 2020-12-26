@@ -5,18 +5,24 @@ var fs = require("fs")
 var crypto = require("crypto")
 var OCR = require("tesseract.js")
 
-var acts = ["Psychotherapy session","Working with an Assistance Dog – learn how to ‘Command’","Handover of documents and products",
-"Review of house and garden","Lunch and playtime with dog","Break","Exercise and walking your dog","Exercise and walking your dog",
-"Review of previous night","Exercise [dog’s name] (recall)","Your dog’s welfare and happiness","Communication in dogs and how to manage",
-"How to care for your dog","Client bonding with their dog","Public access training","Grooming demonstration","Exercise [dog’s name] (lead walk)",
-"Demonstration of [dog’s name]’s advanced tasks","Final questions and discuss Aftercare plan","End of day","Introduction to family pet dog",
+var clocks = ["🕐","🕑","🕒","🕓","🕔","🕕","🕖","🕗","🕘","🕙","🕚","🕚"]
+
+var acts = ["Psychotherapy session",
+  "Working with an Assistance Dog – learn how to ‘Command’",
+  "Handover of documents and products",
+"Review of house and garden","Lunch and playtime with dog","Break",
+  "Exercise and walking your dog","Exercise and walking your dog",
+"Review of previous night","Exercise [a-zA-Z] (recall)",
+  "Your dog’s welfare and happiness","Communication in dogs and how to manage",
+"How to care for your dog","Client bonding with their dog","Public access training","Grooming demonstration","Exercise [A-Za-z] (lead walk)",
+"Demonstration of [a-zA-Z]’s advanced tasks","Final questions and discuss Aftercare plan","End of day","Introduction to family pet dog",
 "Lunch","Exercise in park/recall/lead walk","Exercise and groom ready for public access"]
 var places = ["Your house","Pub","Your local area","Pet shop","Your local park","Newsagent","Pharmacy","Supermarket","Over video call",
   "Front room","The lane","Entrance to the farm","Shops in Congleton","Bedroom","Bathroom","Your house and garden","Book shop","Vets","Train journey","Tram journey",
   "Your school","Restaurant","Garden centre","Hairdressers","Bank","Café","City",]
 
 var options = ["    " +
-"    • Psychotherapy session – Front room if at the farm, over video call if not\n" +
+"Psychotherapy session – Front room if at the farm, over video call if not" +
 "    • Working with an Assistance Dog – learn how to ‘Command’ – Front room if at farm, Your house if not\n" +
 "    • Handover of documents and products – Your house and garden\n" +
 "    • Review of house and garden – Your house and garden\n" +
@@ -187,7 +193,7 @@ router.post("/", (req,res)=>{
              children: [
                new docx.TableCell({
                  children: [new docx.Paragraph({
-                   children: [times[i].match("11.00am") ? image2 : times[i].match("12.00pm") ? image : false , new docx.TextRun({
+                   children: [times[i].match("11.00am") ? "11" : times[i].match("12.00pm") ? "12" : times[i].match("2.00pm") ? "14" : times[i].match("3.00pm") ? "15" : times[i].match("4.30pm") ? "16:30" : false , new docx.TextRun({
                      text: times[i],
                      bold: true,
                      font: "Tahoma",
@@ -196,7 +202,19 @@ router.post("/", (req,res)=>{
                }),
                new docx.TableCell({
                  children: [new docx.Paragraph({
-                   children: [act[i].split(",")[j].match("Andrew arrives") ? image : act[i].split(",")[j].match("Handover of document and products") ?  image2 : false  , new docx.TextRun({
+                   children: [act[i].split(",")[j].match(acts[0]) ? image : act[i].split(",")[j].match(acts[1]) ?  image2 :
+                       act[i].split(",")[j].match(acts[2]) ?  image2 : act[i].split(",")[j].match(acts[3]) ?  image2 :
+                           act[i].split(",")[j].match(acts[4]) ?  image2 : act[i].split(",")[j].match(acts[5]) ?  image2 :
+                               act[i].split(",")[j].match(acts[6]) ?  image2 : act[i].split(",")[j].match(acts[7]) ?  image2 :
+                                   act[i].split(",")[j].match(acts[8]) ?  image2 : act[i].split(",")[j].match(acts[9]) ?  image2 :
+                                       act[i].split(",")[j].match(acts[10]) ?  image2 : act[i].split(",")[j].match(acts[11]) ?  image2 :
+                                           act[i].split(",")[j].match(acts[12]) ?  image2 : act[i].split(",")[j].match(acts[13]) ?  image2 :
+                                               act[i].split(",")[j].match(acts[14]) ?  image2 : act[i].split(",")[j].match(acts[15]) ?  image2 :
+                                                   act[i].split(",")[j].match(acts[16]) ?  image2 : act[i].split(",")[j].match(acts[17]) ?  image2 :
+                                                       act[i].split(",")[j].match(acts[18]) ?  image2 : act[i].split(",")[j].match(acts[19]) ?  image2 :
+                                                           act[i].split(",")[j].match(acts[20]) ?  image2 : act[i].split(",")[j].match(acts[21]) ?  image2 :
+                                                               act[i].split(",")[j].match(acts[22]) ?  image2 : act[i].split(",")[j].match(acts[23]) ?  image2 :
+                                       false  , new docx.TextRun({
                      text: act[i].split(",")[j],
                      bold: true,
                      font: "Tahoma",
